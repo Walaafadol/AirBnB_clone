@@ -8,9 +8,6 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(sel, line):
         """Quit command to exit the program."""
         return True
-    def help_quit(self, arg):
-        """ command to help quit"""
-        printf("Quit command to exit the program")
 
     def do_EOF(self, line):
         """"Inbuilt EOF command """
