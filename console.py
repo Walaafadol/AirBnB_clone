@@ -5,11 +5,11 @@ import cmd
 class HBNBCommand(cmd.Cmd):
     """The command interpreter."""
     prompt = "(hbnb)"
-    def do_quit(sel, line):
+    def do_quit(sel, arg):
         """Quit command to exit the program."""
         return True
 
-    def do_EOF(self, line):
+    def do_EOF(self, arg):
         """"Inbuilt EOF command """
         print("")
         return True
