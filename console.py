@@ -12,7 +12,7 @@ class HBNBCommand(cmd.Cmd):
         """ command to help quit"""
         printf("Quit command to exit the program")
 
-    def do_EOF(self, arg):
+    def do_EOF(self, line):
         """"Inbuilt EOF command """
         print()
         return True
