@@ -18,18 +18,18 @@ class FileStorage:
         """Set in __objects obj with key obj_class_name.id"""
         obj_classname = obj.__class__.__name__
         key = "{}.{}".format(obj_classname, obj.id)
-        fileStorge.__objects[key] = obj
+        FileStorge.__objects[key] = obj
 
     def all(self):
          """Return the dictionary __objects."""
-         return fileStorge.__objects
+         return FileStorage.__objects
     def save(self):
         """Serialize __objects to the JSON file __file_path."""
-        all_obj = fileStorge.__objects
+        all_obj = FileStorage.__objects
         objdict = {}
         for obj in all_obj.keys():
             objdict[obj] = all_obj[obj].to__dict()
-        with open(fileStorage.__file_path, "w", encoding="utf-8") as file:
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
             json.dump(objdict, file)
 
     def reload(self):

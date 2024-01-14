@@ -51,7 +51,8 @@ class BaseModel:
     def __str__(self):
         """Return the print/str representation of the BaseModel."""
         class_name = self.__class__.__name__
-        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
+        return('[' + type(self).__name__ + '] (' + str(self.id) +
+               ') ' + str(self.__dict__))
 if __name__ == "__main__":
     my_model = BaseModel()
     my_model.name = "My_First_Model"

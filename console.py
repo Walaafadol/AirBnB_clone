@@ -5,11 +5,16 @@ import cmd
 import shlex
 from models import storage
 from models.base_model import BaseModel
+import re
+
+
+
+
 
 class HBNBCommand(cmd.Cmd):
     """The command interpreter."""
     prompt = "(hbnb)"
-    _classes = ["BaseModel"]
+    _classes = {'BaseModel': BaseModel}
 
     def emptyline(self):
         """Do nothing  an empty line."""
@@ -18,19 +23,19 @@ class HBNBCommand(cmd.Cmd):
         """Quit command to exit the program."""
         return True
 
-    def do_create(self, arg):
-        """ create new instance"""
+    
 
+    def do_create(self, arg):
+        """ Create a new instance """
         commands = shlex.split(arg)
         if len(commands) == 0:
             print("** class name missing **")
         elif commands[0] not in self._classes:
             print("** class doesn't exist **")
         else:
-            new_ins = BaseModel()
-            new_ins.save()
-            print(new_ins.id)
-
+            new_inst = BaseModel()
+            new_inst.save()
+            print(new_inst.id)
     def do_show(self, arg):
         """ Display the string representation of a class instance"""
         commands = shlex.split(arg)
@@ -73,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
         if len(commands) == 0:
             for key, value in objects.items():
                 print(str(value))
-        elif command[0] not in self._classes:
+        elif commands[0] not in self._classes:
                 print("** class doesn't exist **")
         else:
             for key, value in objects.items():
