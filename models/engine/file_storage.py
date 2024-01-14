@@ -8,6 +8,7 @@ import json
 import models
 import unittest
 from datetime import datetime
+from models.user import User
 from models.base_model import BaseModel
 class FileStorage:
     """Represent an abstracted storage engine."""

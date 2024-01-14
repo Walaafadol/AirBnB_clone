@@ -3,10 +3,10 @@
 
 import cmd
 import shlex
-from models import storage
 from models.base_model import BaseModel
 import re
-
+from models.user import User
+from models import storage
 
 
 
@@ -14,7 +14,7 @@ import re
 class HBNBCommand(cmd.Cmd):
     """The command interpreter."""
     prompt = "(hbnb)"
-    _classes = {'BaseModel': BaseModel}
+    _classes = ["BaseModel", "User"]
 
     def emptyline(self):
         """Do nothing  an empty line."""
@@ -33,8 +33,8 @@ class HBNBCommand(cmd.Cmd):
         elif commands[0] not in self._classes:
             print("** class doesn't exist **")
         else:
-            new_inst = BaseModel()
-            new_inst.save()
+            new_inst = eval(f"{commands[0]}()")
+            storage.save()
             print(new_inst.id)
     def do_show(self, arg):
         """ Display the string representation of a class instance"""

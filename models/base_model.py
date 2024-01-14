@@ -14,6 +14,9 @@ class BaseModel:
             **kwargs (dict): Key/value pairs of attributes.
         """
         timeform = "%Y-%m-%dT%H:%M:%S.%f"
+        self.id = str(uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
@@ -22,19 +25,9 @@ class BaseModel:
                     setattr(self, key, datetime.strptime(value, timeform))
                 else:
                     setattr(self, key, value)
-        else:
-            self.id = str(uuid4())
-            self.created_at = datetime.today()
-            self.updated_at = datetime.today()
-            models.storage.new(self)
-            if len(kwargs) != 0:
-                for k, v in kwargs.items():
-                    if k == "created_at" or k == "updated_at":
-                        self.__dict__[k] = datetime.strptime(v, tform)
-                    else:
-                        self.__dict__[k] = v
-            else:
-                models.storage.new(self)
+        models.storage.new(self)
+
+
     def save(self):
         """Update updated_at with the current datetime."""
         self.updated_at = datetime.today()
