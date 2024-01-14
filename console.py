@@ -6,6 +6,11 @@ import shlex
 from models.base_model import BaseModel
 import re
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 
 
@@ -14,7 +19,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     """The command interpreter."""
     prompt = "(hbnb)"
-    _classes = ["BaseModel", "User"]
+    _classes = ["BaseModel", "User", "Amenity", "Place", "Review", "State", "City"]
 
     def emptyline(self):
         """Do nothing  an empty line."""
@@ -75,6 +80,7 @@ class HBNBCommand(cmd.Cmd):
         """ print representation of all instance"""
         objects = storage.all()
         commands = shlex.split(arg)
+        print(f"{commands = }")
         if len(commands) == 0:
             for key, value in objects.items():
                 print(str(value))
@@ -84,6 +90,21 @@ class HBNBCommand(cmd.Cmd):
             for key, value in objects.items():
                 if key.split('.')[0] == commands[0]:
                         print(str(value))
+    def default(self, arg):
+        """ defult behavior"""
+        arglist = arg.split('.')
+        incomingclass = arglist[0]
+        command = arglist[1].split('(')
+        method = command[0]
+        metdict = {'all': self.do_all, 'show': self.do_show,
+            'destroy': self.do_destroy, 'update': self.do_update}
+ 
+        if method in metdict.keys():
+            return metdict[method]("{} {}".format(incomingclass, ''))
+
+        print("*** UnKnown syntax: {}".format(arg))
+        return False
+
 
     def do_update(self, arg):
         """update an istance"""
