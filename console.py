@@ -85,19 +85,27 @@ class HBNBCommand(cmd.Cmd):
             for key, value in objects.items():
                 print(str(value))
         elif commands[0] not in self._classes:
-                print("** class doesn't exist **")
+                print("** class name missing **")
         else:
             for key, value in objects.items():
                 if key.split('.')[0] == commands[0]:
-                        print(str(value))
+                    print(str(value))
+
     def default(self, arg):
         """ defult behavior"""
         arglist = arg.split('.')
+        print(f"{arglist = }")
         incomingclass = arglist[0]
+        print(f"{incomingclass = }")
         command = arglist[1].split('(')
         method = command[0]
-        metdict = {'all': self.do_all, 'show': self.do_show,
-            'destroy': self.do_destroy, 'update': self.do_update}
+        print(f"{method = }")
+        metdict = {
+            'all': self.do_all,
+            'show': self.do_show,
+            'destroy': self.do_destroy,
+            'update': self.do_update
+        }
  
         if method in metdict.keys():
             return metdict[method]("{} {}".format(incomingclass, ''))
