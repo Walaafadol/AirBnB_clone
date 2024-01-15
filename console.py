@@ -12,23 +12,17 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 from models import storage
-
-
-
-
 class HBNBCommand(cmd.Cmd):
     """The command interpreter."""
     prompt = "(hbnb)"
-    _classes = ["BaseModel", "User", "Amenity", "Place", "Review", "State", "City"]
-
+    _classes = ["BaseModel", "User",
+    "Amenity", "Place", "Review", "State", "City"]
     def emptyline(self):
         """Do nothing  an empty line."""
         pass
     def do_quit(self, arg):
         """Quit command to exit the program."""
         return True
-
-    
 
     def do_create(self, arg):
         """ Create a new instance """
@@ -41,6 +35,7 @@ class HBNBCommand(cmd.Cmd):
             new_inst = eval(f"{commands[0]}()")
             storage.save()
             print(new_inst.id)
+
     def do_show(self, arg):
         """ Display the string representation of a class instance"""
         commands = shlex.split(arg)
@@ -106,7 +101,6 @@ class HBNBCommand(cmd.Cmd):
             'destroy': self.do_destroy,
             'update': self.do_update
         }
- 
         if method in metdict.keys():
             return metdict[method]("{} {}".format(incomingclass, ''))
 
@@ -143,10 +137,6 @@ class HBNBCommand(cmd.Cmd):
                     pass
                 setattr(obje, attrname, attvalue)
                 obje.save()
-
-
-
-                
     def do_EOF(self, line):
         """EOF signal to exit the program."""
         return True
