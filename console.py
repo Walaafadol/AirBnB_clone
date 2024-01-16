@@ -97,9 +97,9 @@ class HBNBCommand(cmd.Cmd):
         arglist = arg.split('.')
         print(f"{arglist = }")
         incomingclass = arglist[0]
-        print(f"{incomingclass = }")
         command = arglist[1].split('(')
         method = command[0]
+        incomigexarg = command[1].split(')')[0]
         print(f"{method = }")
         metdict = {
             'all': self.do_all,
@@ -109,7 +109,8 @@ class HBNBCommand(cmd.Cmd):
             'count': self.do_count
         }
         if method in metdict.keys():
-            return metdict[method]("{} {}".format(incomingclass, ''))
+            return metdict[method]("{} {}".format(incomingclass,
+            incomigexarg))
 
         print("*** UnKnown syntax: {}".format(arg))
         return False
