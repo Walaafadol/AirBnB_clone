@@ -12,14 +12,20 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 from models import storage
+
+
 class HBNBCommand(cmd.Cmd):
     """The command interpreter."""
     prompt = "(hbnb)"
     _classes = ["BaseModel", "User",
     "Amenity", "Place", "Review", "State", "City"]
+
+
     def emptyline(self):
         """Do nothing  an empty line."""
         pass
+
+
     def do_quit(self, arg):
         """Quit command to exit the program."""
         return True
@@ -99,7 +105,8 @@ class HBNBCommand(cmd.Cmd):
             'all': self.do_all,
             'show': self.do_show,
             'destroy': self.do_destroy,
-            'update': self.do_update
+            'update': self.do_update,
+            'count': self.do_count
         }
         if method in metdict.keys():
             return metdict[method]("{} {}".format(incomingclass, ''))
@@ -137,9 +144,31 @@ class HBNBCommand(cmd.Cmd):
                     pass
                 setattr(obje, attrname, attvalue)
                 obje.save()
+
+
     def do_EOF(self, line):
         """EOF signal to exit the program."""
         return True
+
+    def do_count(self, arg):
+        """counts"""
+        objects = storage.all()
+        commands = shlex.split(arg)
+        if arg:
+            incomingclass = commands[0]
+        count = 0
+
+        if commands:
+            if incomingclass in self._classes:
+                for obj in objects.value():
+                    if obj.__class__.__name__ == incomingclass:
+                        count += 1
+                print(count)
+            else:
+                print("** invalid class name **")
+        else:
+            print("** class name missing **"
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
